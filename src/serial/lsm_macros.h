@@ -260,7 +260,7 @@ extern "C" {
   {                                                                        \
     for(i = grid->ilo_gb; i <= grid->ihi_gb; i++)                          \
     {                                                                      \
-      idx = i + j*(grid->grid_dims)[0];                                    \
+      int idx = i + j*(grid->grid_dims_ghostbox)[0];                       \
       printf("%g ", data[idx]);                                            \
     }                                                                      \
     printf("\n");                                                          \
