@@ -971,9 +971,9 @@ void setIndexSpaceLimitsWENO5(Grid *grid)
   jlo_plus_fb  = grid->jlo_D1_fb;     jhi_plus_fb  = grid->jhi_D1_fb-3;
   klo_plus_fb  = grid->klo_D1_fb;     khi_plus_fb  = grid->khi_D1_fb-3;
   
-  ilo_minus_fb = grid->ilo_D1_fb+2;   ihi_minus_fb = grid->ihi_D1_fb;
-  jlo_minus_fb = grid->jlo_D1_fb+2;   jhi_minus_fb = grid->jhi_D1_fb;
-  klo_minus_fb = grid->klo_D1_fb+2;   khi_minus_fb = grid->khi_D1_fb;
+  ilo_minus_fb = grid->ilo_D1_fb+3;   ihi_minus_fb = grid->ihi_D1_fb;
+  jlo_minus_fb = grid->jlo_D1_fb+3;   jhi_minus_fb = grid->jhi_D1_fb;
+  klo_minus_fb = grid->klo_D1_fb+3;   khi_minus_fb = grid->khi_D1_fb;
   
   /* the common fill grid for phi_plus and phi_minus */  
   grid->ilo_fb = ilo_minus_fb;   grid->ihi_fb = ihi_plus_fb;
