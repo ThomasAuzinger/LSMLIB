@@ -16,6 +16,121 @@
 
 /*============= Function definitions for boundary conditions ==============*/
 
+void periodicBC(
+  LSMLIB_REAL *phi,
+  Grid *grid,
+  int bdry_location_idx)
+{
+  int num_dims = grid->num_dims;
+  if (num_dims == 2) {
+
+    switch (bdry_location_idx) { 
+      case 0: 
+      case 1: 
+      case 2: 
+      case 3: {
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &bdry_location_idx);
+        break;
+      }
+      case 6: {
+        int tmp_bdry_location_idx = 0;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        tmp_bdry_location_idx = 1;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        break;
+      };
+
+      case 7: {
+        int tmp_bdry_location_idx = 2;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        tmp_bdry_location_idx = 3;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        break;
+      };
+
+      case 9: {
+        int tmp_bdry_location_idx = 0;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        tmp_bdry_location_idx = 1;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        tmp_bdry_location_idx = 2;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        tmp_bdry_location_idx = 3;
+        LSM2D_PERIODIC(
+          phi,
+          &(grid->ilo_gb), &(grid->ihi_gb), 
+          &(grid->jlo_gb), &(grid->jhi_gb), 
+          &(grid->ilo_fb), &(grid->ihi_fb), 
+          &(grid->jlo_fb), &(grid->jhi_fb), 
+          &tmp_bdry_location_idx);
+
+        break;
+      };
+
+      default: { /* DO NOTHING */ }
+
+    }
+
+  } else if (num_dims == 3) {
+    // Not implemented.
+  } /* end switch on num_dims */
+}
+
 void linearExtrapolationBC(
   LSMLIB_REAL *phi,
   Grid *grid,

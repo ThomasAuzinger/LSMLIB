@@ -44,6 +44,7 @@ extern "C" {
  *      C/C++ code                         Fortran code
  *      ----------                         ------------
  */
+#define LSM2D_PERIODIC                     lsm2dperiodic_
 #define LSM2D_LINEAR_EXTRAPOLATION         lsm2dlinearextrapolation_
 #define LSM2D_SIGNED_LINEAR_EXTRAPOLATION  lsm2dsignedlinearextrapolation_
 #define LSM2D_COPY_EXTRAPOLATION           lsm2dcopyextrapolation_
@@ -51,6 +52,27 @@ extern "C" {
 #define LSM2D_HOMOGENEOUS_NEUMANN_ENO2     lsm2dhomogeneousneumanneno2_
 #define LSM2D_HOMOGENEOUS_NEUMANN_ENO3     lsm2dhomogeneousneumanneno3_
 #define LSM2D_HOMOGENEOUS_NEUMANN_WENO5    lsm2dhomogeneousneumannweno5_
+
+
+/*!
+ * LSM2D_PERIODIC() copies data from the opposing sides of the interior
+ * grid cells into the ghostcells at the specified boundary location.
+ *
+ * Arguments:
+ *  - phi (in/out):            grid function for which to set ghostcells
+ *  - bdry_location_idx (in):  boundary location index
+ *  - *_gb (in):               index range for ghostbox
+ *  - *_fb (in):               index range for fillbox
+ *      
+ * Return value:               none
+ */
+void LSM2D_PERIODIC(
+  LSMLIB_REAL *phi,
+  const int *ilo_gb, const int *ihi_gb,
+  const int *jlo_gb, const int *jhi_gb,
+  const int *ilo_fb, const int *ihi_fb,
+  const int *jlo_fb, const int *jhi_fb,
+  const int *bdry_location_idx);
 
 
 /*!

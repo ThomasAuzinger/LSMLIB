@@ -80,6 +80,25 @@ typedef enum {
   ALL_BOUNDARIES = 9} BOUNDARY_LOCATION_IDX;
 
 /*!
+ * periodicBC() copies data from the opposing sides of the interior
+ * grid cells into the ghostcells at the specified boundary location.
+ *
+ * Arguments:
+ *  - phi (in/out):            grid function for which to set ghostcells
+ *  - bdry_location_idx (in):  boundary location index
+ *  - *_gb (in):               index range for ghostbox
+ *  - *_fb (in):               index range for fillbox
+ *      
+ * Return value:               none
+ *
+ */
+void periodicBC(
+  LSMLIB_REAL *phi,
+  Grid *grid,
+  int bdry_location_idx);
+
+
+/*!
  * linearExtrapolationBC() extrapolates data from interior grid
  * cells into the ghostcells at the specified boundary location(s)
  * using linear extrapolation.

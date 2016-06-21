@@ -25,6 +25,104 @@ c***********************************************************************
 
 c***********************************************************************
 c
+c lsm2dPeriodic() copies data from the opposing sides of the interior
+c grid cells into the ghostcells at the specified boundary location.  
+c
+c Arguments:
+c   phi (in/out):            phi
+c   bdry_location_idx (in):  boundary location index
+c   *_gb (in):               index range for ghostbox
+c   *_fb (in):               index range for fillbox
+c 
+c NOTES:
+c  - fillbox indices must be a subset of ghostbox indices.
+c  - if bdry_location_idx is out of the range for 2D, then no 
+c    ghostcell values are set 
+c
+c***********************************************************************
+      subroutine lsm2dPeriodic(
+     &  phi,
+     &  ilo_gb, ihi_gb, jlo_gb, jhi_gb,
+     &  ilo_fb, ihi_fb, jlo_fb, jhi_fb,
+     &  bdry_location_idx)
+c***********************************************************************
+c { begin subroutine
+      implicit none
+      
+      integer ilo_gb, ihi_gb, jlo_gb, jhi_gb
+      integer ilo_fb, ihi_fb, jlo_fb, jhi_fb
+      integer bdry_location_idx
+      real phi(ilo_gb:ihi_gb,jlo_gb:jhi_gb)
+      
+c     local variables       
+      integer i,j
+      integer offset
+
+      if (bdry_location_idx .eq. 0) then
+c     { extrapolate data in x-direction at lower end
+
+c       { begin j loop
+        do j = jlo_gb, jhi_gb
+          do i = ilo_gb, ilo_fb-1
+            offset = ihi_fb - ilo_fb + 1
+            phi(i,j) = phi(i+offset,j)
+          enddo
+        enddo  
+c       } end j loop
+
+c     } end extrapolate data in x-direction at lower end
+         
+      elseif (bdry_location_idx .eq. 1) then
+c     {  extrapolate data in x-direction at upper end
+
+c       { begin j loop
+        do j = jlo_gb, jhi_gb
+          do i = ihi_fb+1, ihi_gb
+            offset = ihi_fb - ilo_fb + 1
+            phi(i,j) = phi(i-offset,j)
+          enddo 
+        enddo  
+c       } end j loop
+
+c     } end extrapolate data in x-direction at upper end
+
+      elseif (bdry_location_idx .eq. 2) then
+c     {  extrapolate data in y-direction at lower end
+
+c       { begin i loop
+        do i = ilo_gb, ihi_gb
+          do j = jlo_gb, jlo_fb-1
+            offset = jhi_fb - jlo_fb + 1
+            phi(i,j) = phi(i,j+offset)
+          enddo
+        enddo
+c       } end i loop
+
+c     } end extrapolate data in y-direction at lower end
+
+      elseif (bdry_location_idx .eq. 3) then
+c     {  extrapolate data in y-direction at upper end
+
+c       { begin i loop
+        do i = ilo_gb, ihi_gb
+          do j = jhi_fb+1, jhi_gb
+            offset = jhi_fb - jlo_fb + 1
+            phi(i,j) = phi(i,j-offset)
+          enddo 
+        enddo 
+c       } end i loop
+
+c     } end extrapolate data in y-direction at upper end
+
+      endif
+
+      return
+      end
+c } end subroutine
+c***********************************************************************
+
+c***********************************************************************
+c
 c lsm2dLinearExtrapolation() extrapolates 2D data in from the index 
 c range of the fillbox into cells in ghostbox at the specified boundary 
 c location using linear extrapolation.  
