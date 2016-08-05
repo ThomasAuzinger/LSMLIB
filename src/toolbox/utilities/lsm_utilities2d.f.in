@@ -282,6 +282,70 @@ c***********************************************************************
 
 
 c***********************************************************************
+      subroutine lsm2dComputeStableConstAdvectionDt(
+     &  dt,
+     &  vel_x, vel_y,
+     &  ilo_vel_gb, ihi_vel_gb,
+     &  jlo_vel_gb, jhi_vel_gb,
+     &  ilo_ib, ihi_ib,
+     &  jlo_ib, jhi_ib,
+     &  dx, dy,
+     &  cfl_number)
+c***********************************************************************
+c { begin subroutine
+      implicit none
+
+      real dt
+
+c     _gb refers to ghostbox 
+c     _ib refers to box to include in dt calculation
+      integer ilo_vel_gb, ihi_vel_gb
+      integer jlo_vel_gb, jhi_vel_gb
+      integer ilo_ib, ihi_ib
+      integer jlo_ib, jhi_ib
+      real vel_x, vel_y
+      real dx, dy
+      real inv_dx, inv_dy
+      real cfl_number
+      integer i, j
+      real max_U_over_dX
+      real U_over_dX_cur
+      real small_number
+      parameter (small_number = @tiny_nonzero_number@)
+
+c     initialize max_U_over_dX to -1
+      max_U_over_dX = -1.0d0
+
+c     compute inv_dx and inv_dx
+      inv_dx = 1.d0/dx
+      inv_dy = 1.d0/dy
+
+c       loop over included cells {
+    
+        do j=jlo_ib,jhi_ib
+          do i=ilo_ib,ihi_ib
+  
+              U_over_dX_cur = abs(vel_x)*inv_dx
+     &                    + abs(vel_y)*inv_dy
+
+              if (U_over_dX_cur .gt. max_U_over_dX) then
+                max_U_over_dX = U_over_dX_cur  
+              endif
+  
+          enddo
+        enddo
+c       } end loop over grid
+
+c     set dt
+      dt = cfl_number / (max_U_over_dX + small_number);
+
+      return
+      end
+c } end subroutine
+c***********************************************************************
+
+
+c***********************************************************************
       subroutine lsm2dComputeStableNormalVelDt(
      &  dt,
      &  vel_n,

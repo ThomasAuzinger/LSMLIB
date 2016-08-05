@@ -40,6 +40,8 @@ extern "C" {
 
 #define LSM2D_COMPUTE_STABLE_ADVECTION_DT                                     \
                                        lsm2dcomputestableadvectiondt_
+#define LSM2D_COMPUTE_STABLE_CONST_ADVECTION_DT                               \
+                                       lsm2dcomputestableconstadvectiondt_
 #define LSM2D_COMPUTE_STABLE_NORMAL_VEL_DT                                    \
                                        lsm2dcomputestablenormalveldt_
 #define LSM2D_COMPUTE_STABLE_CONST_NORMAL_VEL_DT                              \
@@ -202,6 +204,36 @@ void LSM2D_VOXEL_COUNT_LESS_THAN_ZERO(
  * Return value:             none 
  */
 void LSM2D_COMPUTE_STABLE_ADVECTION_DT(
+  LSMLIB_REAL *dt,
+  const LSMLIB_REAL *vel_x,
+  const LSMLIB_REAL *vel_y,
+  const int *ilo_vel_gb, 
+  const int *ihi_vel_gb,
+  const int *jlo_vel_gb, 
+  const int *jhi_vel_gb,
+  const int *ilo_ib, 
+  const int *ihi_ib,
+  const int *jlo_ib, 
+  const int *jhi_ib,
+  const LSMLIB_REAL *dx,
+  const LSMLIB_REAL *dy,
+  const LSMLIB_REAL *cfl_number);
+
+
+/*!
+ * LSM2D_COMPUTE_STABLE_CONST_ADVECTION_DT() computes the stable time step size
+ * for an advection term based on a CFL criterion.
+ *
+ * Arguments:
+ *  - dt (out):              step size
+ *  - vel_* (in):            components of velocity at t = t_cur
+ *  - *_gb (in):             index range for ghostbox
+ *  - *_ib (in):             index range for box to include dt calculation
+ *  - dx (in):               grid spacing
+ * 
+ * Return value:             none 
+ */
+void LSM2D_COMPUTE_STABLE_CONST_ADVECTION_DT(
   LSMLIB_REAL *dt,
   const LSMLIB_REAL *vel_x,
   const LSMLIB_REAL *vel_y,
