@@ -35,6 +35,8 @@ extern "C" {
  *      ----------                             ------------
  */
 #define LSM2D_ZERO_OUT_LEVEL_SET_EQN_RHS       lsm2dzerooutlevelseteqnrhs_
+#define LSM2D_ADD_CONST_ADVECTION_TERM_TO_LSE_RHS    \
+                                          lsm2daddconstadvectiontermtolserhs_
 #define LSM2D_ADD_ADVECTION_TERM_TO_LSE_RHS    lsm2daddadvectiontermtolserhs_
 #define LSM2D_ADD_NORMAL_VEL_TERM_TO_LSE_RHS   lsm2daddnormalveltermtolserhs_
 #define LSM2D_ADD_CONST_NORMAL_VEL_TERM_TO_LSE_RHS   \
@@ -70,6 +72,47 @@ void LSM2D_ZERO_OUT_LEVEL_SET_EQN_RHS(
 
 
 /*!
+ * LSM2D_ADD_CONST_ADVECTION_TERM_TO_LSE_RHS() adds the contribution 
+ * of an advection term (constant external vector velocity field) to 
+ * the right-hand side of the level set equation when it is written
+ * in the form:
+ *
+ * \f[
+ *
+ *    \phi_t = -\vec{V} \cdot \nabla \phi + ...
+ *
+ * \f]
+ *
+ * Arguments:
+ *  - lse_rhs (in/out):  right-hand of level set equation
+ *  - phi_* (in):        components of \f$ \nabla \phi\f$ at t = t_cur
+ *  - vel_* (in):        components of velocity at t = t_cur
+ *  - *_gb (in):         index range for ghostbox
+ *  - *_fb (in):         index range for fillbox
+ *
+ * Return value:         none
+ */
+void LSM2D_ADD_CONST_ADVECTION_TERM_TO_LSE_RHS(
+  LSMLIB_REAL *lse_rhs,
+  const int *ilo_lse_rhs_gb, 
+  const int *ihi_lse_rhs_gb,
+  const int *jlo_lse_rhs_gb, 
+  const int *jhi_lse_rhs_gb,
+  const LSMLIB_REAL *phi_x, 
+  const LSMLIB_REAL *phi_y,
+  const int *ilo_grad_phi_gb, 
+  const int *ihi_grad_phi_gb,
+  const int *jlo_grad_phi_gb, 
+  const int *jhi_grad_phi_gb,
+  const LSMLIB_REAL *vel_x, 
+  const LSMLIB_REAL *vel_y,
+  const int *ilo_fb, 
+  const int *ihi_fb,
+  const int *jlo_fb,  
+  const int *jhi_fb);
+
+
+  /*!
  * LSM2D_ADD_ADVECTION_TERM_TO_LSE_RHS() adds the contribution of an 
  * advection term (external vector velocity field) to the right-hand 
  * side of the level set equation when it is written in the form:

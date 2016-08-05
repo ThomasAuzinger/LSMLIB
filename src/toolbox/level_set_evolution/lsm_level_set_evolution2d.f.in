@@ -44,6 +44,55 @@ c***********************************************************************
 
 
 c***********************************************************************
+      subroutine lsm2dAddConstAdvectionTermToLSERHS(
+     &  lse_rhs,
+     &  ilo_lse_rhs_gb, ihi_lse_rhs_gb,
+     &  jlo_lse_rhs_gb, jhi_lse_rhs_gb,
+     &  phi_x, phi_y,
+     &  ilo_grad_phi_gb, ihi_grad_phi_gb,
+     &  jlo_grad_phi_gb, jhi_grad_phi_gb,
+     &  vel_x, vel_y,
+     &  ilo_fb, ihi_fb,
+     &  jlo_fb, jhi_fb)
+c***********************************************************************
+c { begin subroutine
+      implicit none
+
+      integer ilo_lse_rhs_gb, ihi_lse_rhs_gb
+      integer jlo_lse_rhs_gb, jhi_lse_rhs_gb
+      integer ilo_grad_phi_gb, ihi_grad_phi_gb
+      integer jlo_grad_phi_gb, jhi_grad_phi_gb
+      integer ilo_vel_gb, ihi_vel_gb
+      integer jlo_vel_gb, jhi_vel_gb
+      integer ilo_fb, ihi_fb
+      integer jlo_fb, jhi_fb
+      real lse_rhs(ilo_lse_rhs_gb:ihi_lse_rhs_gb,
+     &             jlo_lse_rhs_gb:jhi_lse_rhs_gb)
+      real phi_x(ilo_grad_phi_gb:ihi_grad_phi_gb,
+     &           jlo_grad_phi_gb:jhi_grad_phi_gb)
+      real phi_y(ilo_grad_phi_gb:ihi_grad_phi_gb,
+     &           jlo_grad_phi_gb:jhi_grad_phi_gb)
+      real vel_x, vel_y
+      integer i,j
+
+c     { begin loop over grid
+      do j=jlo_fb,jhi_fb
+        do i=ilo_fb,ihi_fb
+        
+          lse_rhs(i,j) = lse_rhs(i,j) - ( vel_x*phi_x(i,j)
+     &                                  + vel_y*phi_y(i,j) )
+      
+        enddo 
+      enddo 
+c     } end loop over grid
+
+      return
+      end
+c } end subroutine
+c***********************************************************************
+
+
+c***********************************************************************
       subroutine lsm2dAddAdvectionTermToLSERHS(
      &  lse_rhs,
      &  ilo_lse_rhs_gb, ihi_lse_rhs_gb,
