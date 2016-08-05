@@ -43,9 +43,9 @@ extern "C" {
                                           lsm2daddconstnormalveltermtolserhs_
 #define LSM2D_ADD_CONST_CURV_TERM_TO_LSE_RHS   lsm2daddconstcurvtermtolserhs_
 #define LSM2D_ADD_CONST_PRECOMPUTED_CURV_TERM_TO_LSE_RHS \
-                                     lsm2daddconstprecomputedcurvtermtolserhs_	
+                                     lsm2daddconstprecomputedcurvtermtolserhs_
 #define LSM2D_ADD_EXTERNAL_AND_NORMAL_VEL_TERM_TO_LSE_RHS \
-                                    lsm2daddexternalandnormalveltermtolserhs_				
+                                    lsm2daddexternalandnormalveltermtolserhs_
 
 /*!
  * LSM2D_ZERO_OUT_LEVEL_SET_EQN_RHS() zeros out the right-hand side of 
@@ -295,13 +295,13 @@ void   LSM2D_ADD_CONST_CURV_TERM_TO_LSE_RHS(
   const int *ihi_grad_phi_gb,
   const int *jlo_grad_phi_gb,
   const int *jhi_grad_phi_gb,
-  const  LSMLIB_REAL *phi_xx,
-  const  LSMLIB_REAL *phi_xy,
-  const  LSMLIB_REAL *phi_yy,
-  const  int *ilo_grad2_phi_gb,
-  const  int *ihi_grad2_phi_gb,
-  const  int *jlo_grad2_phi_gb, 
-  const  int *jhi_grad2_phi_gb,
+  const LSMLIB_REAL *phi_xx,
+  const LSMLIB_REAL *phi_xy,
+  const LSMLIB_REAL *phi_yy,
+  const int *ilo_grad2_phi_gb,
+  const int *ihi_grad2_phi_gb,
+  const int *jlo_grad2_phi_gb, 
+  const int *jhi_grad2_phi_gb,
   const LSMLIB_REAL *b,
   const int *ilo_fb,
   const int *ihi_fb,
