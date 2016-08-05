@@ -1,3 +1,5 @@
+include/*
+lib/*
 *.f
 *.o
 Makefile
@@ -5,3 +7,5 @@ Makefile.config
 Makefile.config.MATLAB
 Makefile.depend
 LSMLIB_config.h
+config.log
+config.status
